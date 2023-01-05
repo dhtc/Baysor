@@ -21,7 +21,7 @@ $(JULIA_SYS_IMAGE): $(JULIA_DEPS_FLAG)
 	$(JULIA_EXEC) -e 'ENV["JULIA_DEPOT_PATH"]="$(JULIA_DEPOT_DIR)"; using PackageCompiler; import Pkg; Pkg.activate(".."); Pkg.instantiate(); import Baysor; create_sysimage(:Baysor; precompile_execution_file="$$(dirname(pathof(Baysor)))/../bin/precompile.jl", sysimage_path="BaysorSysimage.so")'
 
 $(JULIA_DEPS_FLAG): $(JULIA_DEPOT_CONFIG) $(JULIA_EXEC_FLAG)
-	$(JULIA_EXEC) -e 'using Pkg; Pkg.add(PackageSpec(url="https://github.com/kharchenkolab/Baysor.git")); Pkg.add(Pkg.PackageSpec(name="PackageCompiler", version="2.0.2"));'
+	$(JULIA_EXEC) -e 'using Pkg; Pkg.add(PackageSpec(url="https://github.com/dhtc/Baysor.git")); Pkg.add(Pkg.PackageSpec(name="PackageCompiler", version="2.0.2"));'
 	$(JULIA_EXEC) -e 'using Pkg; Pkg.build(); using Baysor' && touch $(JULIA_DEPS_FLAG)
 
 $(JULIA_DEPOT_CONFIG): $(JULIA_EXEC_FLAG)
