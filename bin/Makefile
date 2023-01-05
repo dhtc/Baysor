@@ -1,5 +1,5 @@
-JULIA_ARCHIVE=julia-1.6.4-linux-x86_64.tar.gz
-JULIA_DIR=$(shell pwd)/julia-1.6.4/
+JULIA_ARCHIVE=julia-1.7.3-linux-x86_64.tar.gz
+JULIA_DIR=$(shell pwd)/julia-1.7.3/
 JULIA_DEPOT_DIR=$(shell pwd)/.julia/
 JULIA_DEPOT_CONFIG=$(JULIA_DIR)/etc/julia/startup.jl
 JULIA_EXEC_FLAG=$(JULIA_DIR)/bin/julia_success
@@ -33,4 +33,4 @@ $(JULIA_EXEC_FLAG): $(JULIA_ARCHIVE)
 	tar xf $(JULIA_ARCHIVE) && touch $(JULIA_EXEC_FLAG)
 
 $(JULIA_ARCHIVE):
-	wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.4-linux-x86_64.tar.gz
+	wget -c https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.3-linux-x86_64.tar.gz
