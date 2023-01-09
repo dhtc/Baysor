@@ -1,4 +1,3 @@
-#!
-julia --sysimage="BaysorSysimage.so"  -e "
+#! /usr/bin/env julia --sysimage=/abspath/BaysorSysimage.so
 import Baysor
-Baysor.run_cli()"
+Baysor.run_cli()
