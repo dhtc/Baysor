@@ -1,0 +1,24 @@
+JULIA_ARCHIVE=julia-1.7.3-linux-x86_64.tar.gz
+JULIA_DIR=$(shell pwd)/julia-1.7.3/
+JULIA_EXEC=$(JULIA_DIR)/bin/julia
+JULIA_SYS_IMAGE=BaysorSysimage.so
+SEGMENTATION_EXECUTABLE=./baysor
+
+all: $(SEGMENTATION_EXECUTABLE)
+clean:
+	rm -rf $(JULIA_ARCHIVE) $(JULIA_DIR) $(SEGMENTATION_EXECUTABLE)
+
+$(SEGMENTATION_EXECUTABLE): $(JULIA_SYS_IMAGE)
+	$(JULIA_EXEC) --sysimage=BaysorSysimage.so -e ""
+	printf '#! $(JULIA_EXEC) --sysimage=BaysorSysimage.so -e "import Baysor\nBaysor.run_cli()"' >> $(SEGMENTATION_EXECUTABLE)
+	chmod +x $(SEGMENTATION_EXECUTABLE)
+
+$(JULIA_SYS_IMAGE): $(JULIA_EXEC)
+	$(JULIA_EXEC) -e 'import Pkg; Pkg.add("PackageCompiler"); using PackageCompiler; Pkg.activate(".."); Pkg.instantiate(); import Baysor; create_sysimage(:Baysor; precompile_execution_file="../bin/precompile.jl", sysimage_path="BaysorSysimage.so")'
+
+$(JULIA_EXEC): $(JULIA_ARCHIVE)
+	rm -rf $(JULIA_DIR)
+	tar -zxvf $(JULIA_ARCHIVE)
+
+$(JULIA_ARCHIVE):
+	wget -c https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.3-linux-x86_64.tar.gz
