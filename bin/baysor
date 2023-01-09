@@ -1,0 +1,4 @@
+#!
+julia --sysimage="BaysorSysimage.so"  -e "
+import Baysor
+Baysor.run_cli()"
