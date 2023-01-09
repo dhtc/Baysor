@@ -10,7 +10,7 @@ clean:
 
 $(SEGMENTATION_EXECUTABLE): $(JULIA_SYS_IMAGE)
 	$(JULIA_EXEC) --sysimage=BaysorSysimage.so -e ""
-	printf '#! $(JULIA_EXEC) --sysimage=BaysorSysimage.so -e "import Baysor\nBaysor.run_cli()"' >> $(SEGMENTATION_EXECUTABLE)
+	printf '#! $(JULIA_EXEC) -J BaysorSysimage.so -e "import Baysor\nBaysor.run_cli()"' >> $(SEGMENTATION_EXECUTABLE)
 	chmod +x $(SEGMENTATION_EXECUTABLE)
 
 $(JULIA_SYS_IMAGE): $(JULIA_EXEC)
