@@ -14,7 +14,7 @@ $(SEGMENTATION_EXECUTABLE): $(JULIA_SYS_IMAGE)
 	chmod 700 $(SEGMENTATION_EXECUTABLE)
 
 $(JULIA_SYS_IMAGE): $(JULIA_EXEC)
-	$(JULIA_EXEC) -e 'import Pkg; Pkg.add("PackageCompiler"); using PackageCompiler; Pkg.activate(".."); Pkg.instantiate(); import Baysor; create_sysimage(:Baysor; precompile_execution_file="../bin/precompile.jl", sysimage_path="BaysorSysimage.so")'
+	$(JULIA_EXEC) -e 'using Pkg; Pkg.add(PackageSpec(path="..")); Pkg.add("PackageCompiler"); using PackageCompiler; Pkg.activate(".."); Pkg.instantiate(); import Baysor; create_sysimage(:Baysor; precompile_execution_file="../bin/precompile.jl", sysimage_path="BaysorSysimage.so")'
 
 $(JULIA_EXEC): $(JULIA_ARCHIVE)
 	rm -rf $(JULIA_DIR)
