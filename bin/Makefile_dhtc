@@ -10,8 +10,8 @@ clean:
 
 $(SEGMENTATION_EXECUTABLE): $(JULIA_SYS_IMAGE)
 	$(JULIA_EXEC) --sysimage=BaysorSysimage.so -e ""
-	printf '#! $(JULIA_EXEC) -J BaysorSysimage.so -e "import Baysor\nBaysor.run_cli()"' >> $(SEGMENTATION_EXECUTABLE)
-	chmod +x $(SEGMENTATION_EXECUTABLE)
+	printf '#! $(JULIA_EXEC) --sysimage=BaysorSysimage.so -e "import Baysor\nBaysor.run_cli()"' >> $(SEGMENTATION_EXECUTABLE)
+	chmod 700 $(SEGMENTATION_EXECUTABLE)
 
 $(JULIA_SYS_IMAGE): $(JULIA_EXEC)
 	$(JULIA_EXEC) -e 'import Pkg; Pkg.add("PackageCompiler"); using PackageCompiler; Pkg.activate(".."); Pkg.instantiate(); import Baysor; create_sysimage(:Baysor; precompile_execution_file="../bin/precompile.jl", sysimage_path="BaysorSysimage.so")'
